@@ -229,6 +229,7 @@ class Manager(Store):
 
 class Employee(Manager):
     
+    '''Variable that is accessed when the employee gets a raise'''
     raiseAmt = 1.00
     
     def __init__(self, name, contact, ID, pay):
@@ -241,32 +242,39 @@ class Employee(Manager):
         super.empList.append(self.name)
         
   
-        
+    #To get the email of the Enployee
     @property
     def email(self):
         return '{}@company.com'.format(self.name)
     
+    #To Display the full-name of the Employee
     @property
     def fullname(self):
         return '{}'.format(self.name)
     
+    #To changet the name of the Employee
     @fullname.setter
     def fullname(self,name):
         self.name = name
         
+    #Give a store card to a customer
     def giveCard(self):
         return super.cardInfo()
     
+    #apply a raise on pay of employee
     def applyRaise(self):
         self.pay *= raiseAmt
-        
+    
+    #To fetch a list of all employees under the same manager as the employee    
     def disp_Current_Employees(self):
         return super.empList
     
+    # To change the amount by which the Employee gets a raise
     @classmethod
     def set_raiseAmount(cls, amount):
         cls.raiseAmt = amount
-        
+
+    '''Allows Employee to quit the job'''        
     @classmethod
     def LeaveJob(cls,self):
         del self
@@ -278,7 +286,10 @@ It takes in the customer's ID, name and Contact
 class Customer(Store):
     
     purLis = {}
-    
+    '''
+    This dictionary contains the Names and price of the 
+    products that are in the customer's cart
+    '''
     
     def __init__(self, Customer_Name, ID, Contact, storeName, storeAddress, Budget):
         self.storeAddress = storeAddress
@@ -290,9 +301,17 @@ class Customer(Store):
     
         super().customer_log[self.Customer_Name] = ID
 
+    '''
+    Method to display the list of avaliable products in the store
+    '''
     def showProds(self):
         return super.showProds()
     
+    
+    '''
+    Method ot display all the products in the 
+    cart of the Customer
+    '''
     @classmethod
     def showPurchaseList(cls):
         
@@ -305,6 +324,9 @@ class Customer(Store):
             except:
                 pass
     
+    '''
+    Method that Adds product to cart
+    '''
     @Budget.setter
     @classmethod
     def buyProds(cls, self):
@@ -331,6 +353,10 @@ class Customer(Store):
         
         self.Budget = tempBudget
     
+    
+    '''
+    Method to remove a product from the cart
+    '''
     @Budget.setter    
     @classmethod
     def remFromCart(cls,self):
