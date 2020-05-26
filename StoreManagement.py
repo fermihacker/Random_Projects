@@ -15,6 +15,7 @@ class Store:
     customer_log = {}
     '''this dictionary comtains the assignment of the budget
     in format : 'assignment' to 'assigned money'''
+    prodLis = {}
     
     
     def __init__(self, storeName, storeAddress, netRevenue):
@@ -115,6 +116,34 @@ class Store:
     '''
     
     @classmethod
+    def addProds(cls):
+        Store.showProds()
+        
+        while True:
+            
+            if str(input("Do you wish to continue[y/n]:")) == 'y':
+                continue
+            else:
+                break
+            try:
+                prodName = str(input("Enter the name of Product:"))
+                prodPrice = float(input('Enter the price of the product:'))
+            except:
+                pass
+            cls.prodLis[prodName] = prodPrice    
+    
+
+    def showProds(self):
+        print("The Products Currently avaliable are:")
+        print('Product Name\t\tProduct Price')
+        for i in Store.prodLis:
+            try:
+                print('\t{}\t|\t{}'.format(i,Store.prodLis[i]))
+            except:
+                pass
+            
+    
+    @classmethod
     def CloseStoreDown(cls,self):
         auth = str(input("Are you sure you want to Close the store Down?[y/n]:"))
         if auth == 'y':
@@ -122,7 +151,7 @@ class Store:
             del self
         else:
             print("Store Deletion Aborted")
-        
+    
         
 
 '''The manager class is for assigning a manager to a store'''      
@@ -248,14 +277,53 @@ It takes in the customer's ID, name and Contact
 '''
 class Customer(Store):
     
-    def __init__(self, Customer_Name, ID, Contact, storeName, storeAddress):
+    purLis = {}
+    
+    
+    def __init__(self, Customer_Name, ID, Contact, storeName, storeAddress, Budget):
         self.storeAddress = storeAddress
         self.storeName = storeName
         self.Customer_Name = Customer_Name
         self.ID = ID
         self.Contact = Contact
+        self.Budget = Budget
     
         super().customer_log[self.Customer_Name] = ID
-    
-    
 
+    def showProds(self):
+        return super.showProds()
+    
+    @classmethod
+    def showPurchaseList(cls):
+        
+        print("Your Current Purchase List is:\n")
+        print('Product Name\t\tProduct Price')
+        
+        for i in cls.purLis:
+            try:
+                print('\t{}\t|\t{}'.format(i,cls.purLus[i]))
+            except:
+                pass
+    
+    @classmethod
+    def buyProds(cls, self):
+        
+        tempBudget = self.Budget
+        
+        while True:
+            print("Your Remaining Budget:{}".format(tempBudget))
+            print(Customer.showProds())
+            print('\n\n',Customer.showPurchaseList())
+            
+            if str(input("Do you wish to continue [y/n]:")) == 'y':
+                
+                try:
+                    prodName = str(input("Enter the name of the product:"))
+                    cls.purLis[prodName] = super().prodLis[prodName]
+                except:
+                    print("E: Please enter a valid product Name")
+                tempBudget -= super().prodLis[prodName]
+                print("Remaining Budget: {}".format(tempBudget))
+                    
+            else:
+                break
