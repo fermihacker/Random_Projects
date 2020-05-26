@@ -305,6 +305,7 @@ class Customer(Store):
             except:
                 pass
     
+    @Budget.setter
     @classmethod
     def buyProds(cls, self):
         
@@ -327,3 +328,33 @@ class Customer(Store):
                     
             else:
                 break
+        
+        self.Budget = tempBudget
+    
+    @Budget.setter    
+    @classmethod
+    def remFromCart(cls,self):
+        tempBudget = self.Budget
+        
+        while True:
+            print(Customer.showProds())
+            print('\n\n',Customer.showPurchaseList())
+            
+            if str(input("Do you wish to continue [y/n]:")) == 'y':
+                
+                try:
+                    prodName = str(input("Enter the name of the product you wish to remove:"))
+                    del cls.purLis[prodName]
+                except:
+                    print("E: Please enter a valid product Name")
+                tempBudget += super().prodLis[prodName]
+                    
+            else:
+                break
+        self.Budget = tempBudget
+    
+    
+    
+    
+    
+    
