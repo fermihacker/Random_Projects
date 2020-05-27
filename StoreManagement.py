@@ -7,7 +7,12 @@ Date : May 10, 2020
 
 '''The 'Store' class is the Parent class the contains the data and
   methods for the store'''
+
+
 class Store:
+    
+    report = open('reports.txt','a+')
+    
     
     '''storeList contains a list of all stores registered'''
     storeList = []
@@ -132,7 +137,26 @@ class Store:
                 pass
             cls.prodLis[prodName] = prodPrice    
     
-
+    @classmethod
+    def remProd(cls):
+        
+        print(cls.showProds())
+        
+        while True:
+            prodName = str(input("Enter the name of the product you want to remove:"))
+            
+            try:
+                del cls.prodLis[prodName]
+            except:
+                print("E: Please enter a valid product to remove")
+            
+            if str(input("Do you wish to continue[y/n]:")) == 'y':
+                continue
+            else:
+                break
+            
+        
+    
     def showProds(self):
         print("The Products Currently avaliable are:")
         print('Product Name\t\tProduct Price')
@@ -290,6 +314,7 @@ class Customer(Store):
     This dictionary contains the Names and price of the 
     products that are in the customer's cart
     '''
+    cost = 0
     
     def __init__(self, Customer_Name, ID, Contact, storeName, storeAddress, Budget):
         self.storeAddress = storeAddress
@@ -327,7 +352,7 @@ class Customer(Store):
     '''
     Method that Adds product to cart
     '''
-    @Budget.setter
+    
     @classmethod
     def buyProds(cls, self):
         
@@ -347,17 +372,20 @@ class Customer(Store):
                     print("E: Please enter a valid product Name")
                 tempBudget -= super().prodLis[prodName]
                 print("Remaining Budget: {}".format(tempBudget))
+                if cls.cost >= Budget or tempBudget == self.Budget:
+                    print("Out of money, please proceed to checkout")
+                    break
                     
             else:
                 break
         
         self.Budget = tempBudget
-    
+        cls.cost = self.Budget - tempBudget
+
     
     '''
     Method to remove a product from the cart
     '''
-    @Budget.setter    
     @classmethod
     def remFromCart(cls,self):
         tempBudget = self.Budget
@@ -378,6 +406,34 @@ class Customer(Store):
             else:
                 break
         self.Budget = tempBudget
+        cost = self.Budget - tempBudget
+        
+    @classmethod
+    def report(cls, self):
+        with super().report as rep:
+            print('Please start Writing your report\n\n')
+            t = str(input("Please enter the date in format [dd/mm/yyyy]:"))
+            super().report.append(t+'\n')
+            
+    @classmethod
+    def checkout(cls, self):
+        print('Your Gross Cost is:{}'.format(sum(list(cls.purLis.values()))))
+        if str(input("Do you wish to continue?[y/n]:")) == 'y':
+            if cost > Budget:
+                print("E: Your cost exceeds your budget")
+            
+            self.Budget -= cls.cost 
+            print("Transaction Complete :D")
+            print("Your Current Balance:{}".format(self.Budget))
+            print("\nThank-You for your purchase. :)")
+                    
+            
+        else:
+            print("Exiting Checkout...")
+            
+                
+        
+    
     
     
     
