@@ -305,7 +305,9 @@ class Employee(Manager):
 
 '''
 This Class Allows the user to register a customer into a store
-It takes in the customer's ID, name and Contact
+It takes in the customer's ID, name and Contact, and the budget 
+the customer is ready to spend, and the store's name the
+Customer has entered.
 '''
 class Customer(Store):
     
@@ -316,8 +318,7 @@ class Customer(Store):
     '''
     cost = 0
     
-    def __init__(self, Customer_Name, ID, Contact, storeName, storeAddress, Budget):
-        self.storeAddress = storeAddress
+    def __init__(self,storeName, Customer_Name, ID, Contact, Budget):
         self.storeName = storeName
         self.Customer_Name = Customer_Name
         self.ID = ID
