@@ -11,8 +11,6 @@ Date : May 10, 2020
 
 class Store:
     
-    report = open('reports.txt','a+')
-    
     
     '''storeList contains a list of all stores registered'''
     storeList = []
@@ -21,6 +19,9 @@ class Store:
     '''this dictionary comtains the assignment of the budget
     in format : 'assignment' to 'assigned money'''
     prodLis = {}
+    
+    log_file = open('Customer_log.txt', 'a+')
+    pur_log = open("Purchase_Log.txt",'a+')
     
     
     def __init__(self, storeName, storeAddress, netRevenue):
@@ -326,6 +327,9 @@ class Customer(Store):
         self.Budget = Budget
     
         super().customer_log[self.Customer_Name] = ID
+        with super().log_file as log:
+            log.append('\nCustomer Name:{}\nID:{}\n\n'.format(self.Customer_Name, self.ID))
+            log.close()
 
     '''
     Method to display the list of avaliable products in the store
@@ -409,14 +413,6 @@ class Customer(Store):
         self.Budget = tempBudget
         cost = self.Budget - tempBudget
         
-    @classmethod
-    def report(cls, self):
-        with super().report as rep:
-            print('Please start Writing your report\n\n')
-            t = input("Please enter the date in format [dd/mm/yyyy]:")
-            p = input("Enter Problem in a single line:")
-            super().report.append(t+'\n')
-            super().report.append(p+'\n\n')
             
     @classmethod
     def checkout(cls, self):
@@ -433,13 +429,8 @@ class Customer(Store):
             
         else:
             print("Exiting Checkout...")
-            
-                
         
-    
-    
-    
-    
-    
-    
-    
+        with super().pur_log as pl:
+            pl.append('\nPurchase by:  {}'.format(self.ID))
+            pl.append('\nTransaction Amount: {} units'.format(cls.cost))
+            pl.close()
