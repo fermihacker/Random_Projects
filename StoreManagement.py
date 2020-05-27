@@ -412,8 +412,10 @@ class Customer(Store):
     def report(cls, self):
         with super().report as rep:
             print('Please start Writing your report\n\n')
-            t = str(input("Please enter the date in format [dd/mm/yyyy]:"))
+            t = input("Please enter the date in format [dd/mm/yyyy]:")
+            p = input("Enter Problem in a single line:")
             super().report.append(t+'\n')
+            super().report.append(p+'\n\n')
             
     @classmethod
     def checkout(cls, self):
