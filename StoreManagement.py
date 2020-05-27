@@ -1,7 +1,6 @@
 '''
 This is an Employee Management system...
 Author : Aliasgar Khimani
-Date : May 10, 2020
 :D
 '''
 
