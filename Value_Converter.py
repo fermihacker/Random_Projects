@@ -2,6 +2,7 @@
 #------------------------------------------------------Importing Essential Libraries----------------------------------------------------------
 import tkinter
 from tkinter import *
+import time
 #----------------------------------------------------------------Creating The App-------------------------------------------------------------
 root = Tk()
 root.title("Value Converter")
@@ -16,13 +17,15 @@ def MainConvert():
     try:
         binDisp.delete(first = 0, last = len(binDisp.get()))
         binDisp.insert(0,bin(int(val)).replace('0b', ''))
-        octDisp.delete(first = 0, last = len(binDisp.get()))
+        octDisp.delete(first = 0, last = len(octDisp.get()))
         octDisp.insert(0,oct(int(val)).replace('0o', ''))
-        hexDisp.delete(first = 0, last = len(binDisp.get()))
+        hexDisp.delete(first = 0, last = len(hexDisp.get()))
         hexDisp.insert(0,hex(int(val)).replace('0x', ''))
     except:
         valEnter.delete(0,len(valEnter.get()))
         valEnter.insert(0,"ERROR")
+        
+        
 #---------------------------------------------------------------------------------------------------------------------------------------------
 MainLab = Label(frame,text = "Value : ", bg = '#478fc9',fg = "#404347",height = 3,width = 4, padx = 2, pady = 2)
 MainLab.config(font = ("Futera Medium",15))
